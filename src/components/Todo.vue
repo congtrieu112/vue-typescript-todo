@@ -32,10 +32,10 @@ import { Vue, Component, Prop } from "vue-property-decorator";
 @Component
 export default class Todo extends Vue {
   @Prop() todo!: any;
-  @Prop() onRemove!: any;
-  @Prop() onEdit!: any;
-  @Prop() onCancelEdit!: any;
-  @Prop() onDoneEdit!: any;
+  @Prop() onRemove!: void;
+  @Prop() onEdit!: void;
+  @Prop() onCancelEdit!: void;
+  @Prop() onDoneEdit!: void;
 }
 </script>
 

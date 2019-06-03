@@ -42,11 +42,11 @@ export default class Home extends Vue {
     { id: 0, title: "Item 3", completed: false },
     { id: 0, title: "Item 4", completed: false }
   ];
-  newTodo: any = "";
+  newTodo: string = "";
   editedTodo: any = null;
   beforeEditCache: any = null;
 
-  addTodo() {
+  addTodo(): void {
     const value = this.newTodo && this.newTodo.trim();
     if (!value) {
       return;
@@ -60,17 +60,17 @@ export default class Home extends Vue {
     this.newTodo = "";
   }
 
-  removeTodo(todo: any) {
+  removeTodo(todo: any): void {
     const index = this.todos.indexOf(todo);
     this.todos.splice(index, 1);
   }
 
-  editTodo(todo: any) {
+  editTodo(todo: any): void {
     this.beforeEditCache = todo.title;
     this.editedTodo = todo;
   }
 
-  doneEdit(todo: any) {
+  doneEdit(todo: any): void {
     this.editedTodo = null;
     todo.title = todo.title.trim();
     if (!todo.title) {
@@ -78,7 +78,7 @@ export default class Home extends Vue {
     }
   }
 
-  cancelEdit(todo: any) {
+  cancelEdit(todo: any): void {
     this.editedTodo = null;
     todo.title = this.beforeEditCache;
   }
