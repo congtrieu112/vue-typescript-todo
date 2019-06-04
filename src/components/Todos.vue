@@ -29,19 +29,20 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "@/components/TodoItem.vue";
+import { mapState } from "vuex";
 
 @Component({
   components: {
     TodoItem
+  },
+  computed: {
+    ...mapState({
+      todos: "todos"
+    })
   }
 })
 export default class Todos extends Vue {
-  todos: Array<any> = [
-    { id: 0, title: "Item 1", completed: false },
-    { id: 0, title: "Item 2", completed: false },
-    { id: 0, title: "Item 3", completed: false },
-    { id: 0, title: "Item 4", completed: false }
-  ];
+  todos: any;
   newTodo: string = "";
   editedTodo: any = null;
   beforeEditCache: any = null;
