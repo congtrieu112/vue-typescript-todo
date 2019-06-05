@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { ITodo } from '@/typings'
 
 Vue.use(Vuex);
 
@@ -22,10 +23,10 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
-        addTodo(state, todo) {
+        addTodo(state, todo: ITodo) {
             state.todos.push(todo);
         },
-        removeTodo(state, todo) {
+        removeTodo(state, todo: ITodo) {
             state.todos.splice(state.todos.indexOf(todo), 1);
         },
 
@@ -36,8 +37,8 @@ export const store = new Vuex.Store({
     },
 
     actions: {
-        addTodo({ state, commit }, todoTitle) {
-            let todo = {
+        addTodo({ state, commit }, todoTitle: string) {
+            let todo: ITodo = {
                 id: new Date().getTime(),
                 title: todoTitle,
                 completed: false
@@ -46,7 +47,7 @@ export const store = new Vuex.Store({
             commit('addTodo', todo);
         },
 
-        removeTodo({ state, commit }, todo) {
+        removeTodo({ state, commit }, todo: ITodo) {
             commit('removeTodo', todo);
         },
 
