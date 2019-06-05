@@ -52,22 +52,14 @@ export default class Todos extends Vue {
   beforeEditCache: any = null;
 
   addTodo(): void {
-    const value = this.newTodo && this.newTodo.trim();
-    if (!value) {
-      return;
+    if (this.newTodo.length) {
+      this.$store.dispatch("addTodo", this.newTodo.trim());
+      this.newTodo = "";
     }
-
-    this.todos.push({
-      id: new Date().getTime(),
-      title: value,
-      complete: false
-    });
-    this.newTodo = "";
   }
 
   removeTodo(todo: any): void {
-    const index = this.todos.indexOf(todo);
-    this.todos.splice(index, 1);
+    this.$store.dispatch("removeTodo", todo);
   }
 
   editTodo(todo: any): void {
@@ -77,10 +69,7 @@ export default class Todos extends Vue {
 
   doneEdit(todo: any): void {
     this.editedTodo = null;
-    todo.title = todo.title.trim();
-    if (!todo.title) {
-      this.removeTodo(todo);
-    }
+    this.$store.dispatch("editTodo", todo);
   }
 
   cancelEdit(todo: any): void {
