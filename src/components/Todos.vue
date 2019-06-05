@@ -12,7 +12,7 @@
       ></v-text-field>
       <v-layout row wrap>
         <TodoItem
-          v-for="(todo, index) in todos"
+          v-for="(todo, index) in activeTodos"
           :key="index"
           :class="{editing: todo == editedTodo}"
           :todo="todo"
@@ -29,40 +29,37 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "@/components/TodoItem.vue";
+import { mapState } from "vuex";
+import { store } from "../store";
 
 @Component({
   components: {
     TodoItem
+  },
+  computed: {
+    ...mapState({
+      todos: "todos"
+    }),
+    activeTodos() {
+      return this.$store.getters.activeTodos;
+    }
   }
 })
 export default class Todos extends Vue {
-  todos: Array<any> = [
-    { id: 0, title: "Item 1", completed: false },
-    { id: 0, title: "Item 2", completed: false },
-    { id: 0, title: "Item 3", completed: false },
-    { id: 0, title: "Item 4", completed: false }
-  ];
+  todos: any;
   newTodo: string = "";
   editedTodo: any = null;
   beforeEditCache: any = null;
 
   addTodo(): void {
-    const value = this.newTodo && this.newTodo.trim();
-    if (!value) {
-      return;
+    if (this.newTodo.length) {
+      this.$store.dispatch("addTodo", this.newTodo.trim());
+      this.newTodo = "";
     }
-
-    this.todos.push({
-      id: new Date().getTime(),
-      title: value,
-      complete: false
-    });
-    this.newTodo = "";
   }
 
   removeTodo(todo: any): void {
-    const index = this.todos.indexOf(todo);
-    this.todos.splice(index, 1);
+    this.$store.dispatch("removeTodo", todo);
   }
 
   editTodo(todo: any): void {
@@ -72,10 +69,7 @@ export default class Todos extends Vue {
 
   doneEdit(todo: any): void {
     this.editedTodo = null;
-    todo.title = todo.title.trim();
-    if (!todo.title) {
-      this.removeTodo(todo);
-    }
+    this.$store.dispatch("editTodo", todo);
   }
 
   cancelEdit(todo: any): void {

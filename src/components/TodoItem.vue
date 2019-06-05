@@ -21,6 +21,7 @@
           @keyup.enter="onDoneEdit(todo)"
           @blur="onDoneEdit(todo)"
         ></v-text-field>
+        <!-- v-todo-focus="todo == editedTodo" -->
       </div>
     </v-card>
   </v-flex>
@@ -29,7 +30,15 @@
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
 
-@Component
+@Component({
+  directives: {
+    "todo-focus": function(el, binding) {
+      if (binding.value) {
+        el.focus();
+      }
+    }
+  }
+})
 export default class Todo extends Vue {
   @Prop() todo!: any;
   @Prop() onRemove!: void;
