@@ -12,7 +12,7 @@
       ></v-text-field>
       <v-layout row wrap>
         <TodoItem
-          v-for="(todo, index) in todos"
+          v-for="(todo, index) in activeTodos"
           :key="index"
           :class="{editing: todo == editedTodo}"
           :todo="todo"
@@ -30,6 +30,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "@/components/TodoItem.vue";
 import { mapState } from "vuex";
+import { store } from "../store";
 
 @Component({
   components: {
@@ -38,7 +39,10 @@ import { mapState } from "vuex";
   computed: {
     ...mapState({
       todos: "todos"
-    })
+    }),
+    activeTodos() {
+      return this.$store.getters.activeTodos;
+    }
   }
 })
 export default class Todos extends Vue {
