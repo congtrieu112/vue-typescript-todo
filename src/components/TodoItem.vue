@@ -4,7 +4,7 @@
       <div class="view">
         <v-layout row wrap>
           <v-flex xs8 pa-2>
-            <span @dblclick="edit(todo)">{{todo.title}}</span>
+            <span @dblclick="editTodo(todo)">{{todo.title}}</span>
           </v-flex>
           <v-flex xs4 text-xs-right>
             <v-btn color="error" @click="removeTodo(todo)">Delete</v-btn>
@@ -29,9 +29,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
-import { Action, namespace } from "vuex-class";
+import { Action, Mutation, namespace } from "vuex-class";
 import { ITodo } from "@/typings";
 
+const TodoMutation = namespace("TodoModule", Mutation)
 const TodoAction = namespace("TodoModule", Action);
 
 @Component({
@@ -46,20 +47,20 @@ const TodoAction = namespace("TodoModule", Action);
 export default class TodoItem extends Vue {
   @Prop({ required: true }) todo: ITodo;
 
-  @TodoAction removeTodo;
-  @TodoAction editTodo;
+  @TodoMutation removeTodo;
+  @TodoAction editTodoAction;
 
   public beforeEditCache: string = "";
   public editedTodo: ITodo = null;
 
-  edit(todo) {
+  editTodo(todo) {
     this.beforeEditCache = todo.title;
     this.editedTodo = todo;
   }
 
   doneEdit(todo) {
     this.editedTodo = null;
-    this.editTodo(todo);
+    this.editTodoAction(todo);
   }
 
   cancelEdit(todo) {

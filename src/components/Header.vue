@@ -8,7 +8,7 @@
       autofocus
       autocomplete="off"
       v-model="newTodo"
-      @keyup.enter="add"
+      @keyup.enter="addTodo"
     ></v-text-field>
   </div>
 </template>
@@ -21,12 +21,12 @@ const TodoAction = namespace("TodoModule", Action);
 
 @Component({})
 export default class Header extends Vue {
-  @TodoAction addTodo;
+  @TodoAction addTodoAction;
   public newTodo: string = "";
 
-  add() {
+  addTodo() {
     if (this.newTodo.length) {
-      this.addTodo(this.newTodo.trim());
+      this.addTodoAction(this.newTodo.trim());
       this.newTodo = "";
     }
   }

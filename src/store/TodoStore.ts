@@ -41,7 +41,7 @@ export const mutations: MutationTree<ITodosState> = {
 }
 
 export const actions: ActionTree<ITodosState, RootState> = {
-    addTodo({ state, commit }, todoTitle: string) {
+    addTodoAction({ state, commit }, todoTitle: string) {
         let todo: ITodo = {
             id: new Date().getTime(),
             title: todoTitle,
@@ -51,11 +51,7 @@ export const actions: ActionTree<ITodosState, RootState> = {
         commit('addTodo', todo);
     },
 
-    removeTodo({ state, commit }, todo: ITodo) {
-        commit('removeTodo', todo);
-    },
-
-    editTodo({ state, commit }, todo) {
+    editTodoAction({ state, commit }, todo) {
         commit('editTodo', todo);
         if (!todo.title) {
             commit('removeTodo', todo);
