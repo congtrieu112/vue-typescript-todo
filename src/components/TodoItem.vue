@@ -1,13 +1,13 @@
 <template>
-  <v-flex xs12 mb-2>
+  <v-flex xs12 mb-2 :class="{editing: todo == editedTodo}">
     <v-card light color="white">
       <div class="view">
         <v-layout row wrap>
           <v-flex xs8 pa-2>
-            <span @dblclick="onEdit(todo)">{{todo.title}}</span>
+            <span @dblclick="edit(todo)">{{todo.title}}</span>
           </v-flex>
           <v-flex xs4 text-xs-right>
-            <v-btn color="error" @click="onRemove(todo)">Delete</v-btn>
+            <v-btn color="error" @click="removeTodo(todo)">Delete</v-btn>
           </v-flex>
         </v-layout>
       </div>
@@ -16,12 +16,12 @@
           name="name"
           single-line
           autocomplete="off"
+          v-todo-focus="todo == editedTodo"
           v-model="todo.title"
-          @keyup.esc="onCancelEdit(todo)"
-          @keyup.enter="onDoneEdit(todo)"
-          @blur="onDoneEdit(todo)"
+          @keyup.esc="cancelEdit(todo)"
+          @keyup.enter="doneEdit(todo)"
+          @blur="doneEdit(todo)"
         ></v-text-field>
-        <!-- v-todo-focus="todo == editedTodo" -->
       </div>
     </v-card>
   </v-flex>
@@ -29,6 +29,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from "vue-property-decorator";
+import { Action, namespace } from "vuex-class";
+import { ITodo } from "@/typings";
+
+const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   directives: {
@@ -39,12 +43,29 @@ import { Vue, Component, Prop } from "vue-property-decorator";
     }
   }
 })
-export default class Todo extends Vue {
-  @Prop() todo!: any;
-  @Prop() onRemove!: void;
-  @Prop() onEdit!: void;
-  @Prop() onCancelEdit!: void;
-  @Prop() onDoneEdit!: void;
+export default class TodoItem extends Vue {
+  @Prop({ required: true }) todo: ITodo;
+
+  @TodoAction removeTodo;
+  @TodoAction editTodo;
+
+  public beforeEditCache: string = "";
+  public editedTodo: ITodo = null;
+
+  edit(todo) {
+    this.beforeEditCache = todo.title;
+    this.editedTodo = todo;
+  }
+
+  doneEdit(todo) {
+    this.editedTodo = null;
+    this.editTodo(todo);
+  }
+
+  cancelEdit(todo) {
+    this.editedTodo = null;
+    todo.title = this.beforeEditCache;
+  }
 }
 </script>
 

@@ -6,7 +6,7 @@ export const state: ITodosState = {
     todos: [
         { id: 0, title: "Item 1", completed: true },
         { id: 0, title: "Item 2", completed: true },
-        { id: 0, title: "Item 3", completed: true },
+        { id: 0, title: "Item 3", completed: false },
         { id: 0, title: "Item 4", completed: false }
     ]
 }
@@ -15,8 +15,14 @@ export const getters: GetterTree<ITodosState, RootState> = {
     all(state) {
         return state.todos;
     },
-    activeTodo(state) {
+    active(state) {
+        return state.todos.filter(todo => !todo.completed);
+    },
+    completed(state) {
         return state.todos.filter(todo => todo.completed);
+    },
+    filteredTodos(state, getters) {
+        return getters['active'];
     }
 }
 
