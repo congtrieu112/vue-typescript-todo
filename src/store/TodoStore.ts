@@ -23,16 +23,16 @@ export const getters: GetterTree<ITodosState, RootState> = {
 }
 
 export const mutations: MutationTree<ITodosState> = {
-    setTodos(state, todos: ITodo[]) {
+    SET_TODOS(state, todos: ITodo[]) {
         state.todos = todos
     },
-    addTodo(state, todo: ITodo) {
+    ADD_TODO(state, todo: ITodo) {
         state.todos.push(todo);
     },
-    removeTodo(state, todo: ITodo) {
+    REMOVE_TODO(state, todo: ITodo) {
         state.todos.splice(state.todos.indexOf(todo), 1);
     },
-    editTodo(state, todo) {
+    EDIT_TODO(state, todo) {
         todo = state.todos.find(item => todo.id == item.id);
         todo.title = todo.title.trim();
     }
@@ -44,7 +44,7 @@ export const actions: ActionTree<ITodosState, RootState> = {
             .get('http://localhost:3000/todos')
             .then(r => r.data)
             .then(todos => {
-                commit('setTodos', todos)
+                commit('SET_TODOS', todos)
             });
     },
     addTodoAction({ state, commit }, todoTitle: string) {
@@ -57,7 +57,7 @@ export const actions: ActionTree<ITodosState, RootState> = {
         axios
             .post('http://localhost:3000/todos', todo)
             .then(_ => {
-                commit('addTodo', todo);
+                commit('ADD_TODO', todo);
             });
     },
 
@@ -65,11 +65,11 @@ export const actions: ActionTree<ITodosState, RootState> = {
         axios
             .put(`http://localhost:3000/todos/${todo.id}`, todo)
             .then(_ => {
-                commit('editTodo', todo);
+                commit('EDIT_TODO', todo);
             });
 
         if (!todo.title) {
-            commit('removeTodo', todo);
+            commit('REMOVE_TODO', todo);
         }
     },
 
@@ -77,7 +77,7 @@ export const actions: ActionTree<ITodosState, RootState> = {
         axios
             .delete(`http://localhost:3000/todos/${todo.id}`)
             .then(_ => {
-                commit('removeTodo', todo);
+                commit('REMOVE_TODO', todo);
             });
     }
 }
