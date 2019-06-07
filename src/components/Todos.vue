@@ -7,11 +7,12 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import TodoItem from "@/components/TodoItem.vue";
-import { State, Getter, namespace } from "vuex-class";
+import { State, Getter, Action, namespace } from "vuex-class";
 import { mapState } from "vuex";
 import { store } from "@/store/index.ts";
 
 const TodoGetter = namespace("TodoModule", Getter);
+const TodoAction = namespace("TodoModule", Action);
 
 @Component({
   components: {
@@ -21,6 +22,11 @@ const TodoGetter = namespace("TodoModule", Getter);
 export default class Todos extends Vue {
   @State("TodoModule") TodoState;
   @TodoGetter filteredTodos;
+  @TodoAction loadTodos;
+
+  created() {
+    this.loadTodos();
+  }
 }
 </script>
 
