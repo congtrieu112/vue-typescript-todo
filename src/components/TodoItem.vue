@@ -8,7 +8,7 @@
           </v-flex>
           <v-flex xs4 text-xs-right>
             <v-btn color="info" @click="editTodo(todo)">Edit</v-btn>
-            <v-btn color="error" @click="removeTodo(todo)">Delete</v-btn>
+            <v-btn color="error" @click="removeTodoAction(todo)">Delete</v-btn>
           </v-flex>
         </v-layout>
       </div>
@@ -48,8 +48,8 @@ const TodoAction = namespace("TodoModule", Action);
 export default class TodoItem extends Vue {
   @Prop({ required: true }) todo: ITodo;
 
-  @TodoMutation removeTodo;
   @TodoAction editTodoAction;
+  @TodoAction removeTodoAction;
 
   public beforeEditCache: string = "";
   public editedTodo: ITodo = null;
