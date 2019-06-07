@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="primary--text display-4">Todo list</h1>
+    <h1 class="primary--text display-4">News</h1>
     <v-text-field
       name="name"
       label="What needs to be done?"

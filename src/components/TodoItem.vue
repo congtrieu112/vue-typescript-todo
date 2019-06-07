@@ -1,31 +1,24 @@
 <template>
-  <v-flex xs12 mb-2 :class="{editing: todo == editedTodo}">
-    <v-card light color="white">
-      <div class="view">
-        <v-layout row wrap>
-          <v-flex xs8 pa-2>
-            <router-link :to="{name: 'todoDetail', params: {id: todo.id}}">{{todo.title}}</router-link>
-          </v-flex>
-          <v-flex xs4 text-xs-right>
-            <v-btn color="info" @click="editTodo(todo)">Edit</v-btn>
-            <v-btn color="error" @click="removeTodoAction(todo)">Delete</v-btn>
-          </v-flex>
-        </v-layout>
-      </div>
-      <div class="edit px-2">
-        <v-text-field
-          name="name"
-          single-line
-          autocomplete="off"
-          v-todo-focus="todo == editedTodo"
-          v-model="todo.title"
-          @keyup.esc="cancelEdit(todo)"
-          @keyup.enter="doneEdit(todo)"
-          @blur="doneEdit(todo)"
-        ></v-text-field>
-      </div>
-    </v-card>
-  </v-flex>
+    <v-flex xs12 pa-2 :class="{editing: todo == editedTodo}">
+      <v-card>
+        <v-img
+          src="https://cdn.vuetifyjs.com/images/cards/desert.jpg"
+          aspect-ratio="2.75"
+        ></v-img>
+
+        <v-card-title primary-title>
+          <div>
+            <h3 class="headline mb-0">{{todo.title}}</h3>
+            <div>{{todo.description}}</div>
+          </div>
+        </v-card-title>
+
+        <v-card-actions>
+          <v-btn flat color="info" :to="{name: 'todoDetail', params: {id: todo.id}}">Detail</v-btn>
+          <v-btn flat color="error" @click="removeTodoAction(todo)">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
 </template>
 
 <script lang="ts">
@@ -85,3 +78,31 @@ export default class TodoItem extends Vue {
   display: block;
 }
 </style>
+
+// <v-flex xs12 mb-2>
+//   <v-card light color="white">
+//     <div class="view">
+//       <v-layout row wrap>
+//         <v-flex xs8 pa-2>
+//           <router-link :to="{name: 'todoDetail', params: {id: todo.id}}">{{todo.title}}</router-link>
+//         </v-flex>
+//         <v-flex xs4 text-xs-right>
+//           <v-btn color="info" @click="editTodo(todo)">Edit</v-btn>
+//           <v-btn color="error" @click="removeTodoAction(todo)">Delete</v-btn>
+//         </v-flex>
+//       </v-layout>
+//     </div>
+//     <div class="edit px-2">
+//       <v-text-field
+//         name="name"
+//         single-line
+//         autocomplete="off"
+//         v-todo-focus="todo == editedTodo"
+//         v-model="todo.title"
+//         @keyup.esc="cancelEdit(todo)"
+//         @keyup.enter="doneEdit(todo)"
+//         @blur="doneEdit(todo)"
+//       ></v-text-field>
+//     </div>
+//   </v-card>
+// </v-flex>

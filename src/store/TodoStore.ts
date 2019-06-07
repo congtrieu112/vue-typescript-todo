@@ -9,13 +9,13 @@ export const state: ITodosState = {
 
 export const getters: GetterTree<ITodosState, RootState> = {
     all(state) {
-        return state.todos;
+        return state.todos.reverse();
     },
     active(state) {
-        return state.todos.filter(todo => !todo.completed);
+        return state.todos.reverse().filter(todo => !todo.completed);
     },
     completed(state) {
-        return state.todos.filter(todo => todo.completed);
+        return state.todos.reverse().filter(todo => todo.completed);
     },
     filteredTodos(state, getters) {
         return getters['all'];
@@ -51,6 +51,7 @@ export const actions: ActionTree<ITodosState, RootState> = {
         let todo: ITodo = {
             id: new Date().getTime(),
             title: todoTitle,
+            description: 'Tempore dolor cum rerum placeat nam facilis sed. Cupiditate quae accusamus est. Dolores quos delectus libero ad ipsa.',
             completed: false
         };
 
