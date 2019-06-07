@@ -4,9 +4,10 @@
       <div class="view">
         <v-layout row wrap>
           <v-flex xs8 pa-2>
-            <span @dblclick="editTodo(todo)">{{todo.title}}</span>
+            <router-link :to="{name: 'todoDetail', params: {id: todo.id}}">{{todo.title}}</router-link>
           </v-flex>
           <v-flex xs4 text-xs-right>
+            <v-btn color="info" @click="editTodo(todo)">Edit</v-btn>
             <v-btn color="error" @click="removeTodo(todo)">Delete</v-btn>
           </v-flex>
         </v-layout>

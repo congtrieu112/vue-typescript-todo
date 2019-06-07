@@ -5,9 +5,9 @@ import { RootState } from './index';
 export const state: ITodosState = {
     todos: [
         { id: 0, title: "Item 1", completed: true },
-        { id: 0, title: "Item 2", completed: true },
-        { id: 0, title: "Item 3", completed: false },
-        { id: 0, title: "Item 4", completed: false }
+        { id: 1, title: "Item 2", completed: true },
+        { id: 2, title: "Item 3", completed: false },
+        { id: 3, title: "Item 4", completed: false }
     ]
 }
 
